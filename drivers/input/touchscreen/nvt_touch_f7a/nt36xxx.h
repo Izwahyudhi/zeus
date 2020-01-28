@@ -31,6 +31,7 @@
 #include "../lct_tp_info.h"
 
 #define NVT_DEBUG 0
+#define NVT_DEBUG 1
 
 
 #define NVTTOUCH_RST_PIN 66
@@ -94,6 +95,8 @@ extern const uint16_t touch_key_array[TOUCH_KEY_NUM];
 
 #define NVT_TOUCH_PROC 1
 #define NVT_TOUCH_EXT_PROC 1
+#define NVT_TOUCH_MP 1
+#define MT_PROTOCOL_B 1
 #define WAKEUP_GESTURE 1
 #if WAKEUP_GESTURE
 extern const uint16_t gesture_key_array[];
@@ -105,6 +108,10 @@ extern const uint16_t gesture_key_array[];
 #define BOOT_UPDATE_FIRMWARE_NAME_SHENCHAO "novatek/shenchao_nt36672a_miui_f7a.bin"
 /* add by yangjiangzhu compatible to shenchao and tianma TP FW  2018/3/16  end */
 
+
+
+#define NVT_TOUCH_ESD_PROTECT 1
+#define NVT_TOUCH_ESD_CHECK_PERIOD 1500	/* ms */
 
 
 #define TOUCH_STATE_WORKING    0x00
@@ -178,6 +185,9 @@ extern int32_t nvt_check_fw_reset_state(RST_COMPLETE_STATE check_reset_state);
 extern int32_t nvt_get_fw_info(void);
 extern int32_t nvt_clear_fw_status(void);
 extern int32_t nvt_check_fw_status(void);
+#if NVT_TOUCH_ESD_PROTECT
+extern void nvt_esd_check_enable(uint8_t enable);
+#endif /* #if NVT_TOUCH_ESD_PROTECT */
 extern void nvt_stop_crc_reboot(void);
 
 #endif /* _LINUX_NVT_TOUCH_H */
