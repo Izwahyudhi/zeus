@@ -4,9 +4,9 @@ export KERNELNAME= Zeus
 
 export LOCALVERSION=
 
-export KBUILD_BUILD_USER= #FunProject
+export KBUILD_BUILD_USER=
 
-export KBUILD_BUILD_HOST=Izwahyudhi
+export KBUILD_BUILD_HOST=Izwahyudhi #FunProject
 
 export TOOLCHAIN=clang
 
