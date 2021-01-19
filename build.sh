@@ -1,12 +1,12 @@
 #!/bin/bash
 
-export KERNELNAME=Zeus
+export KERNELNAME= Zeus
 
 export LOCALVERSION=
 
-export KBUILD_BUILD_USER=Izwahyudhi
+export KBUILD_BUILD_USER=
 
-export KBUILD_BUILD_HOST=izwahyudhi@github
+export KBUILD_BUILD_HOST=Izwahyudhi #FunProject
 
 export TOOLCHAIN=clang
 
