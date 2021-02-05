@@ -57,8 +57,6 @@ extern int lct_nvt_tp_info_node_init(void);
 static struct work_struct g_resume_work;
 /* add resume work by wanghan end */
 
-<<<<<<< HEAD
-=======
 #if NVT_TOUCH_ESD_PROTECT
 static struct delayed_work nvt_esd_check_work;
 static struct workqueue_struct *nvt_esd_check_wq;
@@ -68,18 +66,14 @@ uint8_t esd_retry = 0;
 uint8_t esd_retry_max = 5;
 #endif /* #if NVT_TOUCH_ESD_PROTECT */
 
->>>>>>> 141d9bf6b502... drivers: input: import touchscreen drivers
 #if NVT_TOUCH_EXT_PROC
 extern int32_t nvt_extra_proc_init(void);
 #endif
 
-<<<<<<< HEAD
-=======
 #if NVT_TOUCH_MP
 extern int32_t nvt_mp_proc_init(void);
 #endif
 
->>>>>>> 141d9bf6b502... drivers: input: import touchscreen drivers
 struct nvt_ts_data *ts;
 
 
@@ -116,13 +110,10 @@ static void nvt_ts_early_suspend(struct early_suspend *h);
 static void nvt_ts_late_resume(struct early_suspend *h);
 #endif
 
-<<<<<<< HEAD
 #ifdef CONFIG_TOUCHSCREEN_COMMON
 #include <linux/input/tp_common.h>
 #endif
 
-=======
->>>>>>> 141d9bf6b502... drivers: input: import touchscreen drivers
 #if TOUCH_KEY_NUM > 0
 const uint16_t touch_key_array[TOUCH_KEY_NUM] = {
 	KEY_BACK,
@@ -181,7 +172,6 @@ int nvt_gesture_switch(struct input_dev *dev, unsigned int type, unsigned int co
 	return 0;
 }
 
-<<<<<<< HEAD
 #ifdef CONFIG_TOUCHSCREEN_COMMON
 static ssize_t double_tap_show(struct kobject *kobj,
                    struct kobj_attribute *attr, char *buf)
@@ -208,10 +198,6 @@ static struct tp_common_ops double_tap_ops = {
     .store = double_tap_store
 };
 #endif
-=======
->>>>>>> 141d9bf6b502... drivers: input: import touchscreen drivers
-#endif
-
 static uint8_t bTouchIsAwake = 0;
 
 /*******************************************************
@@ -589,8 +575,6 @@ static ssize_t nvt_flash_read(struct file *file, char __user *buff, size_t count
 		return -EFAULT;
 	}
 
-<<<<<<< HEAD
-=======
 #if NVT_TOUCH_ESD_PROTECT
 	/*
 	 * stop esd check work to avoid case that 0x77 report righ after here to enable esd check again
@@ -600,8 +584,7 @@ static ssize_t nvt_flash_read(struct file *file, char __user *buff, size_t count
 	nvt_esd_check_enable(false);
 #endif /* #if NVT_TOUCH_ESD_PROTECT */
 
->>>>>>> 141d9bf6b502... drivers: input: import touchscreen drivers
-	i2c_wr = str[0] >> 7;
+ 	i2c_wr = str[0] >> 7;
 
 	if (i2c_wr == 0) {
 		while (retries < 20) {
@@ -917,8 +900,6 @@ err_request_reset_gpio:
 	return ret;
 }
 
-<<<<<<< HEAD
-=======
 #if NVT_TOUCH_ESD_PROTECT
 void nvt_esd_check_enable(uint8_t enable)
 {
@@ -976,7 +957,6 @@ static void nvt_esd_check_func(struct work_struct *work)
 }
 #endif /* #if NVT_TOUCH_ESD_PROTECT */
 
->>>>>>> 141d9bf6b502... drivers: input: import touchscreen drivers
 #define POINT_DATA_LEN 65
 /*******************************************************
 Description:
@@ -995,13 +975,10 @@ static void nvt_ts_work_func(struct work_struct *work)
 	uint32_t input_w = 0;
 	uint32_t input_p = 0;
 	uint8_t input_id = 0;
-<<<<<<< HEAD
 	uint8_t press_id[TOUCH_MAX_FINGER_NUM] = {0};
-=======
 #if MT_PROTOCOL_B
 	uint8_t press_id[TOUCH_MAX_FINGER_NUM] = {0};
 #endif /* MT_PROTOCOL_B */
->>>>>>> 141d9bf6b502... drivers: input: import touchscreen drivers
 	int32_t i = 0;
 	int32_t finger_cnt = 0;
 
@@ -1021,8 +998,6 @@ static void nvt_ts_work_func(struct work_struct *work)
 	printk("\n");
 	*/
 
-<<<<<<< HEAD
-=======
 #if NVT_TOUCH_ESD_PROTECT
 	if (nvt_fw_recovery(point_data)) {
 		nvt_esd_check_enable(true);
@@ -1030,7 +1005,6 @@ static void nvt_ts_work_func(struct work_struct *work)
 	}
 #endif /* #if NVT_TOUCH_ESD_PROTECT */
 
->>>>>>> 141d9bf6b502... drivers: input: import touchscreen drivers
 #if WAKEUP_GESTURE
 	if (bTouchIsAwake == 0) {
 		input_id = (uint8_t)(point_data[1] >> 3);
@@ -1050,13 +1024,10 @@ static void nvt_ts_work_func(struct work_struct *work)
 			continue;
 
 		if (((point_data[position] & 0x07) == 0x01) || ((point_data[position] & 0x07) == 0x02)) {
-<<<<<<< HEAD
-=======
 #if NVT_TOUCH_ESD_PROTECT
 			/* update interrupt timer */
 			irq_timer = jiffies;
 #endif /* #if NVT_TOUCH_ESD_PROTECT */
->>>>>>> 141d9bf6b502... drivers: input: import touchscreen drivers
 			input_x = (uint32_t)(point_data[position + 1] << 4) + (uint32_t) (point_data[position + 3] >> 4);
 			input_y = (uint32_t)(point_data[position + 2] << 4) + (uint32_t) (point_data[position + 3] & 0x0F);
 			if ((input_x < 0) || (input_y < 0))
@@ -1076,13 +1047,11 @@ static void nvt_ts_work_func(struct work_struct *work)
 			if (input_p == 0)
 				input_p = 1;
 
-<<<<<<< HEAD
 			press_id[input_id - 1] = 1;
 			input_mt_slot(ts->input_dev, input_id - 1);
 			input_mt_report_slot_state(ts->input_dev, MT_TOOL_FINGER, true);
 			input_report_abs(ts->input_dev, ABS_MT_TRACKING_ID, input_id - 1);
 			input_report_key(ts->input_dev, BTN_TOUCH, 1);
-=======
 #if MT_PROTOCOL_B
 			press_id[input_id - 1] = 1;
 			input_mt_slot(ts->input_dev, input_id - 1);
@@ -1091,7 +1060,6 @@ static void nvt_ts_work_func(struct work_struct *work)
 			input_report_abs(ts->input_dev, ABS_MT_TRACKING_ID, input_id - 1);
 			input_report_key(ts->input_dev, BTN_TOUCH, 1);
 #endif /* MT_PROTOCOL_B */
->>>>>>> 141d9bf6b502... drivers: input: import touchscreen drivers
 
 			input_report_abs(ts->input_dev, ABS_MT_POSITION_X, input_x);
 			input_report_abs(ts->input_dev, ABS_MT_POSITION_Y, input_y);
@@ -1100,22 +1068,16 @@ static void nvt_ts_work_func(struct work_struct *work)
 #endif
 			input_report_abs(ts->input_dev, ABS_MT_PRESSURE, input_p);
 
-<<<<<<< HEAD
-=======
 #if MT_PROTOCOL_B
 #else /* MT_PROTOCOL_B */
 			input_mt_sync(ts->input_dev);
 #endif /* MT_PROTOCOL_B */
 
->>>>>>> 141d9bf6b502... drivers: input: import touchscreen drivers
 			finger_cnt++;
 		}
 	}
 
-<<<<<<< HEAD
-=======
 #if MT_PROTOCOL_B
->>>>>>> 141d9bf6b502... drivers: input: import touchscreen drivers
 	for (i = 0; i < ts->max_touch_num; i++) {
 		if (press_id[i] != 1) {
 			input_mt_slot(ts->input_dev, i);
@@ -1128,11 +1090,9 @@ static void nvt_ts_work_func(struct work_struct *work)
 	}
 
 	input_report_key(ts->input_dev, BTN_TOUCH, (finger_cnt > 0));
-<<<<<<< HEAD
 
 #if TOUCH_KEY_NUM > 0
 	if (point_data[61] == 0xF8) {
-=======
 #else /* MT_PROTOCOL_B */
 	if (finger_cnt == 0) {
 		input_report_key(ts->input_dev, BTN_TOUCH, 0);
@@ -1146,7 +1106,6 @@ static void nvt_ts_work_func(struct work_struct *work)
 		/* update interrupt timer */
 		irq_timer = jiffies;
 #endif /* #if NVT_TOUCH_ESD_PROTECT */
->>>>>>> 141d9bf6b502... drivers: input: import touchscreen drivers
 		for (i = 0; i < ts->max_button_num; i++) {
 			input_report_key(ts->input_dev, touch_key_array[i], ((point_data[62] >> i) & 0x01));
 		}
@@ -1497,13 +1456,10 @@ static int32_t nvt_ts_probe(struct i2c_client *client, const struct i2c_device_i
 	ts->input_dev->keybit[BIT_WORD(BTN_TOUCH)] = BIT_MASK(BTN_TOUCH);
 	ts->input_dev->propbit[0] = BIT(INPUT_PROP_DIRECT);
 
-<<<<<<< HEAD
 	input_mt_init_slots(ts->input_dev, ts->max_touch_num, 0);
-=======
 #if MT_PROTOCOL_B
 	input_mt_init_slots(ts->input_dev, ts->max_touch_num, 0);
 #endif
->>>>>>> 141d9bf6b502... drivers: input: import touchscreen drivers
 
 	input_set_abs_params(ts->input_dev, ABS_MT_PRESSURE, 0, TOUCH_FORCE_NUM, 0, 0);
 
@@ -1513,14 +1469,10 @@ static int32_t nvt_ts_probe(struct i2c_client *client, const struct i2c_device_i
 #endif
 	input_set_abs_params(ts->input_dev, ABS_MT_POSITION_X, 0, ts->abs_x_max-1, 0, 0);
 	input_set_abs_params(ts->input_dev, ABS_MT_POSITION_Y, 0, ts->abs_y_max-1, 0, 0);
-<<<<<<< HEAD
-=======
 #if MT_PROTOCOL_B
 
 #else
 	input_set_abs_params(ts->input_dev, ABS_MT_TRACKING_ID, 0, ts->max_touch_num, 0, 0);
-#endif
->>>>>>> 141d9bf6b502... drivers: input: import touchscreen drivers
 #endif
 
 #if TOUCH_KEY_NUM > 0
@@ -1535,16 +1487,12 @@ static int32_t nvt_ts_probe(struct i2c_client *client, const struct i2c_device_i
 		input_set_capability(ts->input_dev, EV_KEY, gesture_key_array[retry]);
 	}
 	wake_lock_init(&gestrue_wakelock, WAKE_LOCK_SUSPEND, "poll-wake-lock");
-<<<<<<< HEAD
 #ifdef CONFIG_TOUCHSCREEN_COMMON
     ret = tp_common_set_double_tap_ops(&double_tap_ops);
     if (ret < 0) {
         NVT_ERR("%s: Failed to create double_tap node err=%d\n",
                 __func__, ret);
     }
-#endif
-=======
->>>>>>> 141d9bf6b502... drivers: input: import touchscreen drivers
 #endif
 
 	sprintf(ts->phys, "input/ts");
@@ -1590,8 +1538,6 @@ static int32_t nvt_ts_probe(struct i2c_client *client, const struct i2c_device_i
 	queue_delayed_work(nvt_fwu_wq, &ts->nvt_fwu_work, msecs_to_jiffies(14000));
 #endif
 
-<<<<<<< HEAD
-=======
 #if NVT_TOUCH_ESD_PROTECT
 	INIT_DELAYED_WORK(&nvt_esd_check_work, nvt_esd_check_func);
 	nvt_esd_check_wq = create_workqueue("nvt_esd_check_wq");
@@ -1601,7 +1547,6 @@ static int32_t nvt_ts_probe(struct i2c_client *client, const struct i2c_device_i
 
 
 
->>>>>>> 141d9bf6b502... drivers: input: import touchscreen drivers
 #ifdef CONFIG_KERNEL_CUSTOM_FACTORY
 	ret = init_lct_tp_work(lct_tp_work_node_callback);
 	if (ret < 0) {
@@ -1639,8 +1584,6 @@ static int32_t nvt_ts_probe(struct i2c_client *client, const struct i2c_device_i
 	}
 #endif
 
-<<<<<<< HEAD
-=======
 #if NVT_TOUCH_MP
 	ret = nvt_mp_proc_init();
 	if (ret != 0) {
@@ -1649,7 +1592,6 @@ static int32_t nvt_ts_probe(struct i2c_client *client, const struct i2c_device_i
 	}
 #endif
 
->>>>>>> 141d9bf6b502... drivers: input: import touchscreen drivers
 #if defined(CONFIG_FB)
 	ts->fb_notif.notifier_call = fb_notifier_callback;
 	ret = fb_register_client(&ts->fb_notif);
@@ -1689,11 +1631,8 @@ err_register_fb_notif_failed:
 #elif defined(CONFIG_HAS_EARLYSUSPEND)
 err_register_early_suspend_failed:
 #endif
-<<<<<<< HEAD
 #if (NVT_TOUCH_PROC || NVT_TOUCH_EXT_PROC)
-=======
 #if (NVT_TOUCH_PROC || NVT_TOUCH_EXT_PROC || NVT_TOUCH_MP)
->>>>>>> 141d9bf6b502... drivers: input: import touchscreen drivers
 err_init_NVT_ts:
 #endif
 	free_irq(client->irq, ts);
@@ -1763,13 +1702,10 @@ Executive outcomes. 0---succeed.
 static int32_t nvt_ts_suspend(struct device *dev)
 {
 	uint8_t buf[4] = {0};
-<<<<<<< HEAD
 	uint32_t i = 0;
-=======
 #if MT_PROTOCOL_B
 	uint32_t i = 0;
 #endif
->>>>>>> 141d9bf6b502... drivers: input: import touchscreen drivers
 
 	LOG_ENTRY();
 	if (!bTouchIsAwake) {
@@ -1783,21 +1719,16 @@ static int32_t nvt_ts_suspend(struct device *dev)
 
 	bTouchIsAwake = 0;
 
-<<<<<<< HEAD
-=======
 #if NVT_TOUCH_ESD_PROTECT
 	cancel_delayed_work_sync(&nvt_esd_check_work);
 	nvt_esd_check_enable(false);
 #endif /* #if NVT_TOUCH_ESD_PROTECT */
 
->>>>>>> 141d9bf6b502... drivers: input: import touchscreen drivers
 	if (enable_gesture_mode) {
 
 		buf[0] = EVENT_MAP_HOST_CMD;
 		buf[1] = 0x13;
-<<<<<<< HEAD
 		CTP_I2C_WRITE(ts->client, I2C_FW_Address, buf, 2);
-=======
 #if 0
 		buf[2] = 0xFF;
 		buf[3] = 0xFF;
@@ -1805,7 +1736,6 @@ static int32_t nvt_ts_suspend(struct device *dev)
 #else
 		CTP_I2C_WRITE(ts->client, I2C_FW_Address, buf, 2);
 #endif
->>>>>>> 141d9bf6b502... drivers: input: import touchscreen drivers
 
 		enable_irq_wake(ts->client->irq);
 
@@ -1820,10 +1750,7 @@ static int32_t nvt_ts_suspend(struct device *dev)
 	}
 
 	/* release all touches */
-<<<<<<< HEAD
-=======
 #if MT_PROTOCOL_B
->>>>>>> 141d9bf6b502... drivers: input: import touchscreen drivers
 	for (i = 0; i < ts->max_touch_num; i++) {
 		input_mt_slot(ts->input_dev, i);
 #if ENABLE_TOUCH_SZIE
@@ -1832,15 +1759,12 @@ static int32_t nvt_ts_suspend(struct device *dev)
 		input_report_abs(ts->input_dev, ABS_MT_PRESSURE, 0);
 		input_mt_report_slot_state(ts->input_dev, MT_TOOL_FINGER, 0);
 	}
-<<<<<<< HEAD
 	input_report_key(ts->input_dev, BTN_TOUCH, 0);
-=======
 #endif
 	input_report_key(ts->input_dev, BTN_TOUCH, 0);
 #if !MT_PROTOCOL_B
 	input_mt_sync(ts->input_dev);
 #endif
->>>>>>> 141d9bf6b502... drivers: input: import touchscreen drivers
 	input_sync(ts->input_dev);
 
 	msleep(50);
@@ -1891,15 +1815,12 @@ static int32_t nvt_ts_resume(struct device *dev)
 	if (delay_gesture) {
 		enable_gesture_mode = !enable_gesture_mode;
 	}
-<<<<<<< HEAD
-=======
 
 #if NVT_TOUCH_ESD_PROTECT
 	queue_delayed_work(nvt_esd_check_wq, &nvt_esd_check_work,
 			msecs_to_jiffies(NVT_TOUCH_ESD_CHECK_PERIOD));
 #endif /* #if NVT_TOUCH_ESD_PROTECT */
 
->>>>>>> 141d9bf6b502... drivers: input: import touchscreen drivers
 	bTouchIsAwake = 1;
 
 	mutex_unlock(&ts->lock);
@@ -2133,15 +2054,12 @@ static void nvt_ts_late_resume(struct early_suspend *h)
 }
 #endif
 
-<<<<<<< HEAD
-=======
 #if 0
 static const struct dev_pm_ops nvt_ts_dev_pm_ops = {
 	.suspend = nvt_ts_suspend,
 	.resume  = nvt_ts_resume,
 };
 #endif
->>>>>>> 141d9bf6b502... drivers: input: import touchscreen drivers
 
 static const struct i2c_device_id nvt_ts_id[] = {
 	{ NVT_I2C_NAME, 0 },
@@ -2171,14 +2089,11 @@ static struct i2c_driver nvt_i2c_driver = {
 	.driver = {
 		.name	= NVT_I2C_NAME,
 		.owner	= THIS_MODULE,
-<<<<<<< HEAD
-=======
 #if 0
 #ifdef CONFIG_PM
 		.pm = &nvt_ts_dev_pm_ops,
 #endif
 #endif
->>>>>>> 141d9bf6b502... drivers: input: import touchscreen drivers
 #ifdef CONFIG_OF
 		.of_match_table = nvt_match_table,
 #endif
@@ -2268,14 +2183,11 @@ static void __exit nvt_driver_exit(void)
 	if (nvt_fwu_wq)
 		destroy_workqueue(nvt_fwu_wq);
 #endif
-<<<<<<< HEAD
-=======
 
 #if NVT_TOUCH_ESD_PROTECT
 	if (nvt_esd_check_wq)
 		destroy_workqueue(nvt_esd_check_wq);
 #endif /* #if NVT_TOUCH_ESD_PROTECT */
->>>>>>> 141d9bf6b502... drivers: input: import touchscreen drivers
 	LOG_DONE();
 }
 

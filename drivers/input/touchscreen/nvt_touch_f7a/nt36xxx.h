@@ -30,7 +30,6 @@
 
 #include "../lct_tp_info.h"
 
-#define NVT_DEBUG 0
 #define NVT_DEBUG 1
 
 
