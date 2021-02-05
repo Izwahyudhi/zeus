@@ -1,8 +1,8 @@
 #!/bin/bash
 
-export KERNELNAME=_-Zeus-_
+export KERNELNAME=Zeus
 
-export LOCALVERSION=4646
+export LOCALVERSION=3x
 
 export KBUILD_BUILD_USER=Izwahyudhi@#FUNProject
 
