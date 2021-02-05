@@ -16,7 +16,7 @@ source helper
 
 gen_toolchain
 
-send_msg "⏳ Start building ${KERNELNAME} ${LOCALVERSION} for ${DEVICES}..."
+send_msg "⏳ Lagi Diracik, ${KERNELNAME} ${LOCALVERSION} for ${DEVICES}..."
 
 START=$(date +"%s")
 
